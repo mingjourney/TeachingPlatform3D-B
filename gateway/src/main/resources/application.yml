@@ -1,0 +1,43 @@
+server:
+  port: 11111
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: service-user
+          uri: lb://service-user
+          order: 1
+          predicates:
+            - Path=/users/**
+          filters:
+            - StripPrefix=1
+        - id: service-heathy
+          uri: lb://service-heathy
+          order: 1
+          predicates:
+            - Path=/record/**
+            - Path=/heathy/**
+          filters:
+            - StripPrefix=1
+        - id: service-essay
+          uri: lb://service-essay
+          order: 1
+          predicates:
+            - Path=/essay/**
+          filters:
+            - StripPrefix=1
+        - id: service-cook
+          uri: lb://service-cook
+          order: 1
+          predicates:
+            - Path=/service-cook/**
+          filters:
+            - StripPrefix=1

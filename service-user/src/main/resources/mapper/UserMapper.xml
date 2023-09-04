@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.healthy.dao.UserMapper">
+    <insert id="signIn" useGeneratedKeys="true" keyColumn="id">
+        insert into t_user(email,mobile,password) values(#{email},#{mobile},#{password})
+    </insert>
+    <update id="saveUserInfo">
+        update t_user set nickname=#{user.nickname},height=#{user.height},weight=#{user.weight},age=#{user.age},
+        birthday=#{user.birthday},sex=#{user.sex},profession=#{user.profession},hobby=#{user.hobby} where id = #{id}
+    </update>
+    <!--该文件与mapper接口在同一包下-->
+    <select id="getUserLoginForm" resultType="com.healthy.dto.UserLoginForm">
+        select id,nickname,mobile,email,password,role from t_user
+        <where>
+            <if test="email!=null">
+                email = #{email}
+            </if>
+            <if test="mobile!=null">
+                mobile = #{mobile}
+            </if>
+        </where>
+    </select>
+    <select id="getUserInfo" resultType="com.healthy.dto.SignInForm">
+        select username,nickname,mobile,email,height,weight,age,birthday,sex,profession,hobby from t_user where id = #{id}
+    </select>
+
+
+</mapper>

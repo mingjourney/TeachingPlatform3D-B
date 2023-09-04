@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.healthy.essay.dao.EssayMapper">
+
+    <resultMap type="com.healthy.entity.HealthCategory" id="HealthCategoryMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="key" column="key" jdbcType="VARCHAR"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap type="com.healthy.entity.Essay" id="Essay">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="essayType" column="essay_type" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+
+    <select id="getHealthCategoryType" resultMap="HealthCategoryMap">
+        select * from t_health_category
+        <where>
+            <if test="ids.size>0">
+                id in
+                <foreach collection="list" item="id" separator="," open="(" close=")">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <select id="getEssayListByType" resultMap="Essay">
+        select id,essay_type,title,description from t_essay where essay_type = #{type}
+    </select>
+    <select id="getEssayById" resultMap="Essay">
+        select id,essay_type,title,description,content from t_essay where id = #{id}
+    </select>
+    <insert id="insertBrowsingHistory" parameterType="com.healthy.dto.BrowsingHistoryDTO">
+        INSERT INTO t_user_browsing_history (user_id, essay_id, viewed_at)
+        VALUES (#{userId}, #{essayId}, #{viewedAt})
+    </insert>
+
+    <update id="updateEssayViewCount">
+        UPDATE t_essay SET view_count = view_count + 1 WHERE id = #{essayId}
+    </update>
+
+    <update id="updateEssayFavoriteCount">
+        UPDATE t_essay SET favorite_count = favorite_count + #{count} WHERE id = #{essayId}
+    </update>
+
+    <insert id="insertUserFavorite" parameterType="com.healthy.entity.UserFavorite">
+        INSERT INTO t_user_favorites (user_id, essay_id, favorited_at)
+        VALUES (#{userId}, #{essayId}, #{timeAt})
+    </insert>
+
+
+    <delete id="deleteUserFavorite" parameterType="java.lang.Integer">
+        DELETE FROM t_user_favorites WHERE user_id = #{userId} And essay_id = #{essayId}
+    </delete>
+    <select id="getUserFavoritesByUserId" resultMap="UserFavoriteResultMap">
+        SELECT uf.id, uf.essay_id, uf.favorited_at,
+               e.title
+        FROM t_user_favorites uf
+                 INNER JOIN t_essay e ON uf.essay_id = e.id
+        WHERE uf.user_id = #{userId}
+    </select>
+
+    <resultMap type="com.healthy.entity.UserFavorite" id="UserFavoriteResultMap">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="essayId" column="essay_id" jdbcType="INTEGER"/>
+        <result property="timeAt" column="favorited_at" jdbcType="TIMESTAMP"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="getUserBrowseCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_user_browsing_history
+        WHERE user_id = #{userId} AND essay_id = #{essayId}
+    </select>
+    <select id="getUserBrowseHistoryByUserId" resultMap="BrowseHistoryResultMap">
+        SELECT h.id, h.essay_id, h.viewed_at,
+               e.title
+        FROM t_user_browsing_history h
+                 INNER JOIN t_essay e ON h.essay_id = e.id
+        WHERE h.user_id = #{userId}
+    </select>
+
+    <resultMap type="com.healthy.entity.BrowsingHistory" id="BrowseHistoryResultMap">
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="essayId" column="essay_id" jdbcType="INTEGER"/>
+        <result property="timeAt" column="viewed_at" jdbcType="TIMESTAMP"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+    </resultMap>
+    <update id="updateBrowseRecordTimestamp">
+        UPDATE t_user_browsing_history
+        SET viewed_at = #{viewedAt}
+        WHERE user_id = #{userId} AND essay_id = #{essayId}
+    </update>
+
+    <resultMap type="com.healthy.entity.Essay" id="EssayWithoutContent">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="essayType" column="essay_type" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <select id="getEssayByIds" resultMap="EssayWithoutContent">
+        SELECT id, title, essay_type, description FROM t_essay WHERE id IN
+        <foreach item="item" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <insert id="addComment" parameterType="com.healthy.entity.Comment">
+        INSERT INTO t_comment (user_id, essay_id, comment)
+        VALUES (#{userId}, #{essayId}, #{comment})
+    </insert>
+    <resultMap id="commentResultMap" type="com.healthy.entity.Comment">
+        <id property="id" column="id" />
+        <result property="userId" column="user_id" />
+        <result property="essayId" column="essay_id" />
+        <result property="content" column="comment" />
+        <result property="timeAt" column="commented_at" />
+    </resultMap>
+
+    <select id="getEssayComments" resultMap="commentResultMap" parameterType="java.lang.Integer">
+        SELECT * FROM t_comment WHERE essay_id = #{essayId}
+    </select>
+
+</mapper>
+

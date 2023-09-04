@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.healthy.heathy.dao.RecordMapper">
+    <resultMap id="sport" type="com.healthy.entity.SportType">
+        <id column="id" jdbcType="INTEGER" property="id" />
+        <result column="sport_name" jdbcType="VARCHAR" property="sportName"/>
+        <result column="calorie" jdbcType="DOUBLE" property="calorie"/>
+        <result column="other" jdbcType="VARCHAR" property="other"/>
+        <result column="icon" jdbcType="VARCHAR" property="icon"/>
+    </resultMap>
+    <!--该文件与mapper接口在同一包下-->
+    <insert id="saveDateData">
+        insert into t_data_date(sleeptime,waketime,breakfast,lunch,dinner,other,create_time,userid)
+        values(#{data.sleepTime},#{data.wakeTime},#{data.breakfast},#{data.lunch},#{data.dinner},#{data.other},now(),#{userid})
+    </insert>
+    <insert id="saveSports">
+        insert into t_sportitem(user_id,create_time,standard_type,sporttime) values
+        <foreach collection="sports" item="sport" separator=",">
+            (#{userid},now(),#{sport.id},#{sport.duration})
+        </foreach>
+    </insert>
+    <select id="getSports" resultMap="sport">
+        select * from t_sporttype
+    </select>
+</mapper>
