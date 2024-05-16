@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:8.0.22
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Gjm2048749!
+    ports:
+     - 3306:3306
+
+  redis:
+    image: redis:latest
+    restart: always
+    command: redis-server --requirepass Gjm2048749! --user root
+    ports:
+      - 6379:6379
+
+  nacos:
+    image: nacos/nacos-server:v2.2.1
+    container_name: nacos
+    restart: always
+    volumes:
+      - ./logs/:/home/nacos/logs
+      - ./init.d/custom.properties:/home/nacos/init.d/custom.properties
+
+    ports:
+      - 8848:8848
+      - 9848:9848
+      - 9849:9849
+    environment:
+      - MODE=standalone
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    ports:
+    - 11111:11111
+
+
+  service-essay:
+    build:
+      context: ./service-essay
+      dockerfile: Dockerfile
+    ports:
+    - 8886:8886

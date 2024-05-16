@@ -1,0 +1,2 @@
+# AllZoneHealthBackend
+结合ChatGPT开放的api打造5大智能服务，Spring Cloud作为后端框架

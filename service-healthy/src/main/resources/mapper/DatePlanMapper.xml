@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.healthy.heathy.dao.DatePlanMapper">
+  <resultMap id="BaseResultMap" type="com.gugu.entity.DatePlan">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="reason" jdbcType="VARCHAR" property="reason" />
+    <result column="slogan" jdbcType="VARCHAR" property="slogan" />
+    <result column="time_Slots" jdbcType="VARCHAR" property="timeSlots" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, userid, reason, slogan, time_Solts, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_date_plan
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+    <select id="getDatePlanToday" resultMap="BaseResultMap">
+      select * from t_date_plan where userid = #{userid} and (create_time BETWEEN CONCAT(CURDATE(),' 00:00:00') AND CONCAT(CURDATE(),' 23:59:59'))
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_date_plan
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gugu.entity.DatePlan" useGeneratedKeys="true">
+    insert into t_date_plan (userid, reason, slogan, 
+      time_Solts, create_time)
+    values (#{userid,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{slogan,jdbcType=VARCHAR}, 
+      #{timeSolts,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gugu.entity.DatePlan" useGeneratedKeys="true">
+    insert into t_date_plan
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="slogan != null">
+        slogan,
+      </if>
+      <if test="timeSolts != null">
+        time_Solts,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="slogan != null">
+        #{slogan,jdbcType=VARCHAR},
+      </if>
+      <if test="timeSolts != null">
+        #{timeSolts,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gugu.entity.DatePlan">
+    update t_date_plan
+    <set>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="slogan != null">
+        slogan = #{slogan,jdbcType=VARCHAR},
+      </if>
+      <if test="timeSolts != null">
+        time_Solts = #{timeSolts,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gugu.entity.DatePlan">
+    update t_date_plan
+    set userid = #{userid,jdbcType=INTEGER},
+      reason = #{reason,jdbcType=VARCHAR},
+      slogan = #{slogan,jdbcType=VARCHAR},
+      time_Solts = #{timeSolts,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

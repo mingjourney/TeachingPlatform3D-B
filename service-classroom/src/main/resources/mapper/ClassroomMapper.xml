@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gugu.dao.ClassroomMapper">
+    <resultMap type="com.gugu.entity.Classroom" id="Classroom">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="teacherId" column="teacherId" jdbcType="INTEGER"/>
+        <result property="startTime" column="startTime" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="endTime" jdbcType="TIMESTAMP"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="vacancyCount" column="vacancyCount" jdbcType="INTEGER"/>
+        <result property="onlineCount" column="onlineCount" jdbcType="INTEGER"/>
+        <result property="capacity" column="capacity" jdbcType="INTEGER"/>
+        <result property="studentIdList" column="studentIdList" jdbcType="VARCHAR"/>
+        <result property="rows" column="deskRows" jdbcType="INTEGER"/>
+        <result property="columns" column="deskColumns" jdbcType="INTEGER"/>
+    </resultMap>
+    <resultMap type="com.gugu.entity.CourseHistory" id="CourseHistory">
+        <result column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="course_id" property="courseId" />
+        <result column="start_time" property="startTime" />
+        <result column="end_time" property="endTime" />
+        <result column="duration_minutes" property="durationMinutes" />
+    </resultMap>
+
+    <select id="classroomTotal" resultType="int">
+        SELECT COUNT(*) FROM t_classroom
+    </select>
+    <select id="getClassroomList" resultMap="Classroom">
+        select * from t_classroom ORDER BY id DESC limit #{offset}, #{pageSize}
+    </select>
+    <select id="getUserCourseHistory" resultMap="CourseHistory">
+        SELECT
+            id,
+            user_id AS userId,
+            course_id AS courseId,
+            start_time AS startTime,
+            end_time AS endTime,
+            duration_minutes AS durationMinutes
+        FROM
+            t_user_course_records
+        WHERE
+            user_id = #{id}
+        ORDER BY
+            start_time DESC
+    </select>
+    <select id="getClassroomDetailById" resultMap="Classroom">
+        SELECT * FROM t_classroom WHERE id = #{id}
+    </select>
+    <insert id="addClassroom" parameterType="com.gugu.dto.ClassroomDTO">
+            INSERT INTO t_classroom (name, teacherId, password, startTime, endTime, deskRows, deskColumns ,capacity, description, vacancyCount)
+        VALUES (#{name}, #{teacherId}, #{password}, #{startTime}, #{endTime}, #{rows}, #{columns}, #{capacity}, #{description}, #{vacancyCount})
+    </insert>
+
+    <!--    <resultMap type="com.gugu.entity.HealthCategory" id="HealthCategoryMap">-->
+<!--        <result property="id" column="id" jdbcType="INTEGER"/>-->
+<!--        <result property="title" column="title" jdbcType="VARCHAR"/>-->
+<!--        <result property="key" column="key" jdbcType="VARCHAR"/>-->
+<!--        <result property="cover" column="cover" jdbcType="VARCHAR"/>-->
+<!--        <result property="description" column="description" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
+
+<!--    <resultMap type="com.gugu.entity.Classroom" id="Essay">-->
+<!--        <result property="id" column="id" jdbcType="INTEGER"/>-->
+<!--        <result property="title" column="title" jdbcType="VARCHAR"/>-->
+<!--        <result property="content" column="content" jdbcType="VARCHAR"/>-->
+<!--        <result property="essayType" column="essay_type" jdbcType="VARCHAR"/>-->
+<!--        <result property="description" column="description" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
+
+
+
+<!--    <select id="getHealthCategoryType" resultMap="HealthCategoryMap">-->
+<!--        select * from t_health_category-->
+<!--        <where>-->
+<!--            <if test="ids.size>0">-->
+<!--                id in-->
+<!--                <foreach collection="list" item="id" separator="," open="(" close=")">-->
+<!--                    #{id}-->
+<!--                </foreach>-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+<!--    <select id="getEssayListByType" resultMap="Essay">-->
+<!--        select id,essay_type,title,description from t_essay where essay_type = #{type}-->
+<!--    </select>-->
+<!--    <select id="getEssayById" resultMap="Essay">-->
+<!--        select id,essay_type,title,description,content from t_essay where id = #{id}-->
+<!--    </select>-->
+<!--    <insert id="insertBrowsingHistory" parameterType="com.gugu.dto.BrowsingHistoryDTO">-->
+<!--        INSERT INTO t_user_browsing_history (user_id, essay_id, viewed_at)-->
+<!--        VALUES (#{userId}, #{essayId}, #{viewedAt})-->
+<!--    </insert>-->
+
+<!--    <update id="updateEssayViewCount">-->
+<!--        UPDATE t_essay SET view_count = view_count + 1 WHERE id = #{essayId}-->
+<!--    </update>-->
+
+<!--    <update id="updateEssayFavoriteCount">-->
+<!--        UPDATE t_essay SET favorite_count = favorite_count + #{count} WHERE id = #{essayId}-->
+<!--    </update>-->
+
+<!--    <insert id="insertUserFavorite" parameterType="com.gugu.entity.UserFavorite">-->
+<!--        INSERT INTO t_user_favorites (user_id, essay_id, favorited_at)-->
+<!--        VALUES (#{userId}, #{essayId}, #{timeAt})-->
+<!--    </insert>-->
+
+
+<!--    <delete id="deleteUserFavorite" parameterType="java.lang.Integer">-->
+<!--        DELETE FROM t_user_favorites WHERE user_id = #{userId} And essay_id = #{essayId}-->
+<!--    </delete>-->
+<!--    <select id="getUserFavoritesByUserId" resultMap="UserFavoriteResultMap">-->
+<!--        SELECT uf.id, uf.essay_id, uf.favorited_at,-->
+<!--               e.title-->
+<!--        FROM t_user_favorites uf-->
+<!--                 INNER JOIN t_essay e ON uf.essay_id = e.id-->
+<!--        WHERE uf.user_id = #{userId}-->
+<!--    </select>-->
+
+<!--    <resultMap type="com.gugu.entity.UserFavorite" id="UserFavoriteResultMap">-->
+<!--        <id property="id" column="id" jdbcType="INTEGER"/>-->
+<!--        <result property="essayId" column="essay_id" jdbcType="INTEGER"/>-->
+<!--        <result property="timeAt" column="favorited_at" jdbcType="TIMESTAMP"/>-->
+<!--        <result property="title" column="title" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
+<!--    <select id="getUserBrowseCount" resultType="java.lang.Integer">-->
+<!--        SELECT COUNT(*) FROM t_user_browsing_history-->
+<!--        WHERE user_id = #{userId} AND essay_id = #{essayId}-->
+<!--    </select>-->
+<!--    <select id="getUserBrowseHistoryByUserId" resultMap="BrowseHistoryResultMap">-->
+<!--        SELECT h.id, h.essay_id, h.viewed_at,-->
+<!--               e.title-->
+<!--        FROM t_user_browsing_history h-->
+<!--                 INNER JOIN t_essay e ON h.essay_id = e.id-->
+<!--        WHERE h.user_id = #{userId}-->
+<!--    </select>-->
+
+<!--    <resultMap type="com.gugu.entity.BrowsingHistory" id="BrowseHistoryResultMap">-->
+<!--        <id property="id" column="id" jdbcType="INTEGER"/>-->
+<!--        <result property="userId" column="user_id" jdbcType="INTEGER"/>-->
+<!--        <result property="essayId" column="essay_id" jdbcType="INTEGER"/>-->
+<!--        <result property="timeAt" column="viewed_at" jdbcType="TIMESTAMP"/>-->
+<!--        <result property="title" column="title" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
+<!--    <update id="updateBrowseRecordTimestamp">-->
+<!--        UPDATE t_user_browsing_history-->
+<!--        SET viewed_at = #{viewedAt}-->
+<!--        WHERE user_id = #{userId} AND essay_id = #{essayId}-->
+<!--    </update>-->
+
+<!--    <resultMap type="com.gugu.entity.Essay" id="EssayWithoutContent">-->
+<!--        <result property="id" column="id" jdbcType="INTEGER"/>-->
+<!--        <result property="title" column="title" jdbcType="VARCHAR"/>-->
+<!--        <result property="essayType" column="essay_type" jdbcType="VARCHAR"/>-->
+<!--        <result property="description" column="description" jdbcType="VARCHAR"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="getEssayByIds" resultMap="EssayWithoutContent">-->
+<!--        SELECT id, title, essay_type, description FROM t_essay WHERE id IN-->
+<!--        <foreach item="item" collection="ids" open="(" separator="," close=")">-->
+<!--            #{item}-->
+<!--        </foreach>-->
+<!--    </select>-->
+
+<!--    <insert id="addComment" parameterType="com.gugu.entity.Comment">-->
+<!--        INSERT INTO t_comment (user_id, essay_id, comment)-->
+<!--        VALUES (#{userId}, #{essayId}, #{comment})-->
+<!--    </insert>-->
+<!--    <resultMap id="commentResultMap" type="com.gugu.entity.Comment">-->
+<!--        <id property="id" column="id" />-->
+<!--        <result property="userId" column="user_id" />-->
+<!--        <result property="essayId" column="essay_id" />-->
+<!--        <result property="content" column="comment" />-->
+<!--        <result property="timeAt" column="commented_at" />-->
+<!--    </resultMap>-->
+
+<!--    <select id="getEssayComments" resultMap="commentResultMap" parameterType="java.lang.Integer">-->
+<!--        SELECT * FROM t_comment WHERE essay_id = #{essayId}-->
+<!--    </select>-->
+
+</mapper>
+

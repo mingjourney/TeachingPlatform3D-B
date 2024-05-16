@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.healthy.heathy.dao.TargetMapper">
+    <!--该文件与mapper接口在同一包下-->
+    <insert id="addTarget">
+        insert into t_target(user_id,target,create_time,end_time,punishment,reward)
+        values(#{userid},#{goals},now(),#{target.targetDate},#{target.punishment},#{target.reward})
+    </insert>
+</mapper>
