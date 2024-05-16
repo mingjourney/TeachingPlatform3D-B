@@ -1,7 +1,7 @@
 package com.healthy.heathy.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.healthy.common.ResultResponse;
+import com.gugu.common.ResultResponse;
 
 /**
  * @author Gugu

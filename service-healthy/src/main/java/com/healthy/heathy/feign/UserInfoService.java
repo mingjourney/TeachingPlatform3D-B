@@ -1,7 +1,7 @@
 package com.healthy.heathy.feign;
 
-import com.healthy.common.ResultResponse;
-import com.healthy.dto.SignInForm;
+import com.gugu.common.ResultResponse;
+import com.gugu.dto.SignInForm;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

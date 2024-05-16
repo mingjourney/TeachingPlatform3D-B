@@ -1,6 +1,6 @@
 package com.healthy.heathy.dao;
 
-import com.healthy.dto.TargetForm;
+import com.gugu.dto.TargetForm;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

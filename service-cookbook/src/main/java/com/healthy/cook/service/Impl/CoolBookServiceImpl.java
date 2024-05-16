@@ -1,9 +1,9 @@
 package com.healthy.cook.service.Impl;
 
-import com.healthy.common.ResultResponse;
+import com.gugu.common.ResultResponse;
 import com.healthy.cook.dao.TRecipeCategoriesDao;
 import com.healthy.cook.service.CookBookService;
-import com.healthy.entity.RecipeCategories;
+import com.gugu.entity.RecipeCategories;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

@@ -1,8 +1,8 @@
 package com.healthy.heathy.dao;
 
-import com.healthy.dto.DateDataForm;
-import com.healthy.dto.SportItem;
-import com.healthy.entity.SportType;
+import com.gugu.dto.DateDataForm;
+import com.gugu.dto.SportItem;
+import com.gugu.entity.SportType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

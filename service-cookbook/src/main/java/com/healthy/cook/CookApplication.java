@@ -1,6 +1,6 @@
 package com.healthy.cook;
 
-import com.healthy.annotation.EnableTransUserTransmitter;
+import com.gugu.annotation.EnableTransUserTransmitter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;

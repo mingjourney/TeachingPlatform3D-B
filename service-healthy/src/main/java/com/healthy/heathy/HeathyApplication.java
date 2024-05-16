@@ -1,6 +1,6 @@
 package com.healthy.heathy;
 
-import com.healthy.annotation.EnableTransUserTransmitter;
+import com.gugu.annotation.EnableTransUserTransmitter;
 import com.lilittlecat.chatgpt.offical.ChatGPT;
 import okhttp3.OkHttpClient;
 import org.springframework.boot.SpringApplication;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.healthy.essay.dao.EssayMapper">
 
-    <resultMap type="com.healthy.entity.HealthCategory" id="HealthCategoryMap">
+    <resultMap type="com.gugu.entity.HealthCategory" id="HealthCategoryMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="key" column="key" jdbcType="VARCHAR"/>
@@ -10,7 +10,7 @@
         <result property="description" column="description" jdbcType="VARCHAR"/>
     </resultMap>
 
-    <resultMap type="com.healthy.entity.Essay" id="Essay">
+    <resultMap type="com.gugu.entity.Essay" id="Essay">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>
@@ -32,13 +32,43 @@
         </where>
     </select>
 
-    <select id="getEssayListByType" resultMap="Essay">
+    <select id="getEssayListByType" resultMap="Essay" parameterType="com.gugu.dto.EssaySearchDTO">
         select id,essay_type,title,description from t_essay where essay_type = #{type}
     </select>
+    <select id="getEssayListByInfo" resultMap="Essay">
+        SELECT id, title, description
+        FROM t_essay
+        <where>
+            <if test="type != null and type != 0">
+                AND essay_type = #{type}
+            </if>
+            <if test="searchTerm != null and searchTerm != ''">
+                AND (title LIKE CONCAT('%', #{searchTerm}, '%') OR description LIKE CONCAT('%', #{searchTerm}, '%'))
+            </if>
+        </where>
+        ORDER BY
+            CASE WHEN #{sortType} = 1 THEN view_count END DESC,
+            CASE WHEN #{sortType} = 2 THEN id END DESC
+            LIMIT #{limit}
+        OFFSET #{offset}
+    </select>
+    <select id="getEssayCountByInfo" resultType="int">
+        SELECT COUNT(*)
+        FROM t_essay
+        <where>
+            <if test="type != null and type != 0">
+                AND essay_type = #{type}
+            </if>
+            <if test="searchTerm != null and searchTerm != ''">
+                AND (title LIKE CONCAT('%', #{searchTerm}, '%') OR description LIKE CONCAT('%', #{searchTerm}, '%'))
+            </if>
+        </where>
+    </select>
+
     <select id="getEssayById" resultMap="Essay">
         select id,essay_type,title,description,content from t_essay where id = #{id}
     </select>
-    <insert id="insertBrowsingHistory" parameterType="com.healthy.dto.BrowsingHistoryDTO">
+    <insert id="insertBrowsingHistory" parameterType="com.gugu.dto.BrowsingHistoryDTO">
         INSERT INTO t_user_browsing_history (user_id, essay_id, viewed_at)
         VALUES (#{userId}, #{essayId}, #{viewedAt})
     </insert>
@@ -51,7 +81,7 @@
         UPDATE t_essay SET favorite_count = favorite_count + #{count} WHERE id = #{essayId}
     </update>
 
-    <insert id="insertUserFavorite" parameterType="com.healthy.entity.UserFavorite">
+    <insert id="insertUserFavorite" parameterType="com.gugu.entity.UserFavorite">
         INSERT INTO t_user_favorites (user_id, essay_id, favorited_at)
         VALUES (#{userId}, #{essayId}, #{timeAt})
     </insert>
@@ -68,7 +98,7 @@
         WHERE uf.user_id = #{userId}
     </select>
 
-    <resultMap type="com.healthy.entity.UserFavorite" id="UserFavoriteResultMap">
+    <resultMap type="com.gugu.entity.UserFavorite" id="UserFavoriteResultMap">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="essayId" column="essay_id" jdbcType="INTEGER"/>
         <result property="timeAt" column="favorited_at" jdbcType="TIMESTAMP"/>
@@ -86,7 +116,7 @@
         WHERE h.user_id = #{userId}
     </select>
 
-    <resultMap type="com.healthy.entity.BrowsingHistory" id="BrowseHistoryResultMap">
+    <resultMap type="com.gugu.entity.BrowsingHistory" id="BrowseHistoryResultMap">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="userId" column="user_id" jdbcType="INTEGER"/>
         <result property="essayId" column="essay_id" jdbcType="INTEGER"/>
@@ -99,7 +129,7 @@
         WHERE user_id = #{userId} AND essay_id = #{essayId}
     </update>
 
-    <resultMap type="com.healthy.entity.Essay" id="EssayWithoutContent">
+    <resultMap type="com.gugu.entity.Essay" id="EssayWithoutContent">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="essayType" column="essay_type" jdbcType="VARCHAR"/>
@@ -113,11 +143,11 @@
         </foreach>
     </select>
 
-    <insert id="addComment" parameterType="com.healthy.entity.Comment">
+    <insert id="addComment" parameterType="com.gugu.entity.Comment">
         INSERT INTO t_comment (user_id, essay_id, comment)
         VALUES (#{userId}, #{essayId}, #{comment})
     </insert>
-    <resultMap id="commentResultMap" type="com.healthy.entity.Comment">
+    <resultMap id="commentResultMap" type="com.gugu.entity.Comment">
         <id property="id" column="id" />
         <result property="userId" column="user_id" />
         <result property="essayId" column="essay_id" />

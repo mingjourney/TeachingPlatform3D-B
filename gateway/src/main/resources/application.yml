@@ -41,3 +41,10 @@ spring:
             - Path=/service-cook/**
           filters:
             - StripPrefix=1
+        - id: service-classroom
+          uri: lb://service-classroom
+          order: 1
+          predicates:
+            - Path=/classroom/**
+          filters:
+            - StripPrefix=1

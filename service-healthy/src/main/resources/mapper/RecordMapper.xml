@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.healthy.heathy.dao.RecordMapper">
-    <resultMap id="sport" type="com.healthy.entity.SportType">
+    <resultMap id="sport" type="com.gugu.entity.SportType">
         <id column="id" jdbcType="INTEGER" property="id" />
         <result column="sport_name" jdbcType="VARCHAR" property="sportName"/>
         <result column="calorie" jdbcType="DOUBLE" property="calorie"/>

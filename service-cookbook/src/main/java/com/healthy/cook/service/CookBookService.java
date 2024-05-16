@@ -1,6 +1,6 @@
 package com.healthy.cook.service;
 
-import com.healthy.common.ResultResponse;
+import com.gugu.common.ResultResponse;
 
 /**
  * @author Gugu

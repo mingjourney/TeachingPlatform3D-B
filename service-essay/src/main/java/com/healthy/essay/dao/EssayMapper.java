@@ -1,7 +1,8 @@
 package com.healthy.essay.dao;
 
-import com.healthy.dto.BrowsingHistoryDTO;
-import com.healthy.entity.*;
+import com.gugu.dto.BrowsingHistoryDTO;
+import com.gugu.dto.EssaySearchDTO;
+import com.gugu.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,8 @@ public interface EssayMapper {
     List<HealthCategory> getHealthCategoryType(List<Integer> ids);
 
     List<Essay> getEssayListByType(Integer type);
-
+    List<Essay> getEssayListByInfo(EssaySearchDTO essaySearchDTO);
+    int getEssayCountByInfo(EssaySearchDTO essaySearchDTO);
     Essay getEssayById(Integer id);
 
     void insertBrowsingHistory(BrowsingHistoryDTO browsingHistory);

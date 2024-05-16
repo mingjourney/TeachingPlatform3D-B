@@ -1,7 +1,7 @@
 package com.healthy.heathy.controller;
 
-import com.healthy.common.ResultResponse;
-import com.healthy.dto.TargetForm;
+import com.gugu.common.ResultResponse;
+import com.gugu.dto.TargetForm;
 import com.healthy.heathy.service.TargetService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,7 +1,7 @@
 package com.healthy.heathy.service;
 
-import com.healthy.common.ResultResponse;
-import com.healthy.dto.TargetForm;
+import com.gugu.common.ResultResponse;
+import com.gugu.dto.TargetForm;
 
 /**
  * @author Gugu

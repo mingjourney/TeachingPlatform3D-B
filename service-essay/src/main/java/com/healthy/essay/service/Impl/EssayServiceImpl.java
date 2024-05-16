@@ -1,15 +1,15 @@
 package com.healthy.essay.service.Impl;
 import cn.hutool.json.JSONArray;
-import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.healthy.common.ResultResponse;
-import com.healthy.common.UserHolder;
-import com.healthy.dto.BrowsingHistoryDTO;
-import com.healthy.dto.UserDTO;
-import com.healthy.entity.*;
+import com.gugu.common.ResultResponse;
+import com.gugu.common.UserHolder;
+import com.gugu.dto.BrowsingHistoryDTO;
+import com.gugu.dto.EssaySearchDTO;
+import com.gugu.dto.UserDTO;
+import com.gugu.entity.*;
 import com.healthy.essay.dao.EssayMapper;
 import com.healthy.essay.service.EssayService;
-import com.healthy.utils.JsonUtil;
+import com.gugu.utils.JsonUtil;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -21,9 +21,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 /**
  * @author Gugu
@@ -74,6 +74,19 @@ public class EssayServiceImpl implements EssayService {
     public ResultResponse getEssayListByType(Integer type) {
         List<Essay> essayListByType = essayMapper.getEssayListByType(type);
         return ResultResponse.success("查询成功",essayListByType);
+    }
+    @Override
+    public ResultResponse getEssayListByInfo(EssaySearchDTO essaySearchDTO) {
+        int offset = (essaySearchDTO.getPageIndex() - 1) * essaySearchDTO.getPageSize();
+        essaySearchDTO.setOffset(offset);
+        essaySearchDTO.setLimit(essaySearchDTO.getPageSize());
+        System.out.println(essaySearchDTO);
+        List<Essay> essayListByInfo = essayMapper.getEssayListByInfo(essaySearchDTO);
+        int total = essayMapper.getEssayCountByInfo(essaySearchDTO);
+        Map<String, Object> result = new HashMap<>();
+        result.put("essayList", essayListByInfo);
+        result.put("total", total);
+        return ResultResponse.success("查询成功", result);
     }
 
 

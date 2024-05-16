@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.healthy.heathy.dao.DatePlanMapper">
-  <resultMap id="BaseResultMap" type="com.healthy.entity.DatePlan">
+  <resultMap id="BaseResultMap" type="com.gugu.entity.DatePlan">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="userid" jdbcType="INTEGER" property="userid" />
     <result column="reason" jdbcType="VARCHAR" property="reason" />
@@ -25,13 +25,13 @@
     delete from t_date_plan
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.healthy.entity.DatePlan" useGeneratedKeys="true">
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gugu.entity.DatePlan" useGeneratedKeys="true">
     insert into t_date_plan (userid, reason, slogan, 
       time_Solts, create_time)
     values (#{userid,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{slogan,jdbcType=VARCHAR}, 
       #{timeSolts,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.healthy.entity.DatePlan" useGeneratedKeys="true">
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gugu.entity.DatePlan" useGeneratedKeys="true">
     insert into t_date_plan
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userid != null">
@@ -68,7 +68,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.healthy.entity.DatePlan">
+  <update id="updateByPrimaryKeySelective" parameterType="com.gugu.entity.DatePlan">
     update t_date_plan
     <set>
       <if test="userid != null">
@@ -89,7 +89,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.healthy.entity.DatePlan">
+  <update id="updateByPrimaryKey" parameterType="com.gugu.entity.DatePlan">
     update t_date_plan
     set userid = #{userid,jdbcType=INTEGER},
       reason = #{reason,jdbcType=VARCHAR},

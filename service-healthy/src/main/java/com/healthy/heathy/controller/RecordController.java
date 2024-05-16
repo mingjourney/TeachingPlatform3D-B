@@ -1,7 +1,7 @@
 package com.healthy.heathy.controller;
 
-import com.healthy.common.ResultResponse;
-import com.healthy.dto.DateDataForm;
+import com.gugu.common.ResultResponse;
+import com.gugu.dto.DateDataForm;
 import com.healthy.heathy.service.RecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

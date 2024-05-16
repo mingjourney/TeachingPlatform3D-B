@@ -1,6 +1,6 @@
 package com.healthy.heathy.controller;
 
-import com.healthy.common.ResultResponse;
+import com.gugu.common.ResultResponse;
 import com.lilittlecat.chatgpt.offical.ChatGPT;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

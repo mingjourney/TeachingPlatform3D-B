@@ -10,9 +10,9 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
   datasource:
-    url: jdbc:mysql://localhost:3306/healthPlatform?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/HealthyPlatform?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root
-    password: Gjm9478402
+    password: Gjm9478402?
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   jackson:

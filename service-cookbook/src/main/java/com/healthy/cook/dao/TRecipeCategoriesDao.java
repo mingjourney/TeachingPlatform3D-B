@@ -1,6 +1,6 @@
 package com.healthy.cook.dao;
 
-import com.healthy.entity.RecipeCategories;
+import com.gugu.entity.RecipeCategories;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;

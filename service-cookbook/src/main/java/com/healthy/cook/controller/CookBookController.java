@@ -1,6 +1,6 @@
 package com.healthy.cook.controller;
 
-import com.healthy.common.ResultResponse;
+import com.gugu.common.ResultResponse;
 import com.healthy.cook.service.CookBookService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

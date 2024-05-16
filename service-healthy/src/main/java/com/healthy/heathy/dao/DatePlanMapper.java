@@ -1,6 +1,6 @@
 package com.healthy.heathy.dao;
 
-import com.healthy.entity.DatePlan;
+import com.gugu.entity.DatePlan;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper

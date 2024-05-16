@@ -1,12 +1,11 @@
 package com.healthy.heathy.service.Impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.healthy.common.Prompt;
-import com.healthy.common.ResultResponse;
-import com.healthy.dto.DatePlanDTO;
-import com.healthy.dto.SignInForm;
+import com.gugu.common.Prompt;
+import com.gugu.common.ResultResponse;
+import com.gugu.dto.DatePlanDTO;
+import com.gugu.dto.SignInForm;
 import com.healthy.heathy.feign.UserInfoService;
 import com.healthy.heathy.service.ChatGPTService;
 import com.lilittlecat.chatgpt.offical.ChatGPT;

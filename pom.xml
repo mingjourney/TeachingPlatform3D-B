@@ -19,6 +19,7 @@
         <module>service-healthy</module>
         <module>service-essay</module>
         <module>service-cookbook</module>
+        <module>service-classroom</module>
     </modules>
     <name>HeathyMe</name>
     <description>HeathyMe</description>
@@ -63,6 +64,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+
     </dependencies>
     <dependencyManagement>
         <dependencies>

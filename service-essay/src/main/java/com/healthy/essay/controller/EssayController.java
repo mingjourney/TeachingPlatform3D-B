@@ -1,18 +1,13 @@
 package com.healthy.essay.controller;
 
-import com.healthy.common.ResultResponse;
-import com.healthy.entity.Comment;
-import com.healthy.entity.Essay;
-import com.healthy.entity.UserFavorite;
+import com.gugu.common.ResultResponse;
+import com.gugu.dto.EssaySearchDTO;
 import com.healthy.essay.service.EssayService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author Gugu
@@ -57,6 +52,13 @@ public class EssayController {
     @ApiOperation("通过文章类型获取文章列表")
     public ResultResponse getEssayListByType(Integer type){
         return essayService.getEssayListByType(type);
+    }
+
+    @PostMapping("getEssaysByInfo")
+    @ApiOperation("通过文章类型获取文章列表")
+    public ResultResponse getEssayListByInfo(@RequestBody EssaySearchDTO essaySearchDTO){
+        System.out.println();
+        return essayService.getEssayListByInfo(essaySearchDTO);
     }
 
     @GetMapping("getEssayDetailById")

@@ -1,7 +1,7 @@
 package com.healthy.heathy.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.healthy.common.ResultResponse;
+import com.gugu.common.ResultResponse;
 import com.healthy.heathy.service.ChatGPTService;
 import com.healthy.heathy.service.RecordService;
 import io.swagger.annotations.Api;
